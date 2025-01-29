@@ -1,0 +1,13 @@
+#divList{
+    background-color: aliceblue;
+}
+table{
+    height: 95%;
+    width: 95%;
+    margin: auto;
+    padding: 2em;
+}
+td img{
+    height: 100px;
+    width: auto;
+}
