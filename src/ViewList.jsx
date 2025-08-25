@@ -39,19 +39,20 @@ export const ViewList = () => {
       <th>Language</th>
     </tr>
   </thead>
+  <tbody>
   {data.map((book) => (
-    <tbody>
-          <td key={book.idBook}><img src={book.coverImage} alt="Book cover" /></td>
-          <td key={book.idBook}>{book.idBook}</td>
-          <td key={book.idBook}>{book.title}</td>
-          <td key={book.idBook}>{book.author.lastName} {book.author.firstName}</td>
-          <td key={book.idBook}>{book.genre.name.charAt(0).toUpperCase() + book.genre.name.slice(1)}</td>
-          <td key={book.idBook}>{book.fiction ? "Yes" : "No"}</td>
-          <td key={book.idBook}>{book.publisher}</td>
-          <td key={book.idBook}>{book.language.charAt(0) + book.language.slice(1).toLowerCase()}</td>
-          
-  </tbody>
+    <tr key={book.idBook}>
+      <td><img src={book.coverImage} alt="Book cover" /></td>
+      <td>{book.idBook}</td>
+      <td>{book.title}</td>
+      <td>{book.author.lastName} {book.author.firstName}</td>
+      <td>{book.genre.name.charAt(0).toUpperCase() + book.genre.name.slice(1)}</td>
+      <td>{book.fiction ? "Yes" : "No"}</td>
+      <td>{book.publisher}</td>
+      <td>{book.language.charAt(0) + book.language.slice(1).toLowerCase()}</td>
+    </tr>
         ))}
+  </tbody>
 </table>
 </div>
 

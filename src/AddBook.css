@@ -1,0 +1,16 @@
+#pageContent{
+    background-color: #C4D7E0;
+    padding: 5em;
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+#forms{
+    background-color: aliceblue;
+}
+form{
+    height: 95%;
+    width: 95%;
+    margin: auto;
+    padding: 2em;
+}

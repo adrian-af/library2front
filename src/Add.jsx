@@ -29,6 +29,6 @@ return(
             <option value="Book">Book</option>
             <option value="Copy">Copy</option>
         </select>
-        <div>{ renderComponent }</div>
+        <div>{ renderComponent() }</div>
     </div>
 );};

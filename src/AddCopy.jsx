@@ -1,4 +1,4 @@
 export const AddCopy = () =>
     {
-        <h1>Add a copy</h1>
-    }
+       return <h1>Add a copy</h1>;
+    };

@@ -3,6 +3,8 @@ import './MyHeader.css';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
+import Dropdown from 'react-bootstrap/Dropdown';
+import { DropdownButton } from 'react-bootstrap';
 
 export const MyHeader = () => {
   return (
@@ -18,7 +20,13 @@ export const MyHeader = () => {
               <Link to="/">Home</Link>
             </li>
             <li className="nav-item mx-3">
-              <Link to="/add">Add</Link>
+              <Dropdown>
+                <DropdownButton key="add" title="Add">
+                  <Dropdown.Item as={Link} to="/addBook">Add Book</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/addCopy">Add Copy</Dropdown.Item>
+                </DropdownButton>
+              </Dropdown>
+              
             </li>
             <li className="nav-item mx-3">
               <Link to="/manage">Manage</Link>

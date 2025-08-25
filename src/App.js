@@ -2,7 +2,8 @@
 import './App.css';
 import React from "react";
 import {MyHeader} from './MyHeader';
-import { Add } from './Add';
+import { AddBook } from './AddBook';
+import { AddCopy } from './AddCopy';
 import { HomeContent } from './HomeContent';
 import { Manage } from './Manage';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,20 +13,15 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <header className="App-header fixed-top">
           <MyHeader/>
           <Routes>
             <Route path="/" element={<HomeContent />} />
-            <Route path="/about" element={<Add />} />
+            <Route path="/addCopy" element={<AddCopy />} />
+            <Route path="/addBook" element={<AddBook />} />
             <Route path="/manage" element={<Manage />} />
           </Routes>
-        </header>
       </BrowserRouter>
-      <div id="mainContainer">
-        <div id="divList" className='container rounded shadow'>
-          <HomeContent/>
-        </div>
-      </div>
+      
     </div>
   );
 }
