@@ -1,0 +1,22 @@
+.btn-danger{
+    height: 1.7em;
+    width: 1.7em;
+}
+#exit{
+    padding: 0 0 0.2em 0;
+    font-size: 1.5em;
+    font-family: "Segoe UI";
+}
+.textField{
+    max-width: 80%;
+    height: 2em;
+}
+
+.form{
+    padding: 3em;
+}
+
+.modalContainer{
+    max-width: 28em;
+    width: 60%;
+}

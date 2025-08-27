@@ -1,4 +1,4 @@
-import './ViewList.css';
+import '../styles/ViewList.css';
 import React, { useEffect, useState } from 'react';
 import { Spinner } from "react-bootstrap";
 

@@ -1,11 +1,11 @@
 //App.js
-import './App.css';
+import './styles/App.css';
 import React from "react";
-import {MyHeader} from './MyHeader';
-import { AddBook } from './AddBook';
-import { AddCopy } from './AddCopy';
-import { HomeContent } from './HomeContent';
-import { Manage } from './Manage';
+import {MyHeader} from './components/MyHeader';
+import { AddBook } from './components/AddBook';
+import { AddCopy } from './components/AddCopy';
+import { HomeContent } from './components/HomeContent';
+import { Manage } from './components/Manage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 

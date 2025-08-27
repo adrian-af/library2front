@@ -1,4 +1,4 @@
-import './HomeContent.css';
+import '../styles/HomeContent.css';
 import React, { useEffect, useState } from 'react';
 import { ViewList } from './ViewList';
 

@@ -1,9 +1,12 @@
-import './AddBook.css';
+import '../styles/AddBook.css';
 import { Spinner } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
+import ModalNewAuthor from './ModalNewAuthor';
 
 export const AddBook = () =>   {
     const [data, setData] = useState([]);
+    const [authorPopup, setAuthorPopup] = useState(false);
+    const [author, setAuthor] = useState("");
   
     useEffect(() => {
         fetch('http://localhost:8080/api/v1/author/all')
@@ -20,27 +23,32 @@ export const AddBook = () =>   {
     if (data.length === 0) return <Spinner animation="border" role="status">
     <span className="visually-hidden">Loading...</span></Spinner>;
        return(
-        <p id="pageContent">
-            <h1>Add a copy</h1>
+        <div id="pageContent">
+            <h1>Add a book</h1>
             <div>
                 <form id="forms">
-                    <label for="title">Title</label>
+                    <label htmlFor="title">Title</label>
                     <input id="title" name='title' type="text"></input>
                     <p/>
-                    <label for="author">Author</label>
-                    <select id="author" name="author">
-                        <option disabled selected>Select author...</option>
-                        {data.map((author) => (
+                    <label htmlFor="author">Author</label>
+                    <select id="author" name="author" value={author} onChange={(e) => setAuthor(e.target.value)}>
+                        <option disabled value="">Select author...</option>
+
+                        {data
+                        .slice() // make a shallow copy so we don't mutate state directly
+                        .sort((a, b) => a.lastName.localeCompare(b.lastName))
+                        .map((author) => (
                             <option key={author.idAuthor}>{ author.firstName } {author.lastName } </option>
                         ))}
                     </select>
-                    <a>+ New author</a>
-                        
-
-
-        
                 </form>
             </div>
-        </p>
+            <button type='button' onClick={() => setAuthorPopup(true)}>+ New author</button>
+            {
+                authorPopup && <ModalNewAuthor closeModalNewAuthor={setAuthorPopup}/>    
+            }
+
+        
+        </div>
        );
     };
