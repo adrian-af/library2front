@@ -1,8 +1,9 @@
 #pageContent{
     background-color: #C4D7E0;
-    padding: 5em;
-    height: 100vh;
+    padding: 3em;
+    height: 100%;
     overflow-y: hidden;
+    width: 95%;
 }
 
 #forms{
@@ -13,4 +14,14 @@ form{
     width: 95%;
     margin: auto;
     padding: 2em;
+}
+
+#new-author{
+    width: fit-content;
+}
+
+.react-select{
+  border: none;
+  padding: 0.375rem 0 0.375rem 0.75rem;
+  background-color: aliceblue;
 }

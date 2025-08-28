@@ -45,7 +45,7 @@ export const ViewList = () => {
       <td><img src={book.coverImage} alt="Book cover" /></td>
       <td>{book.idBook}</td>
       <td>{book.title}</td>
-      <td>{book.author.lastName} {book.author.firstName}</td>
+      <td>{book.author[0]?.lastName}, {book.author[0]?.firstName}</td>
       <td>{book.genre.name.charAt(0).toUpperCase() + book.genre.name.slice(1)}</td>
       <td>{book.fiction ? "Yes" : "No"}</td>
       <td>{book.publisher}</td>
