@@ -6,39 +6,45 @@ export default function ModalNewAuthor({ closeModalNewAuthor }) {
     const [success, setSuccess] = useState("");
 
     const createAuthor = async (event) => {
-    event.preventDefault();
-    setError("");
-    setSuccess("");
+        event.preventDefault();
+        setError("");
+        setSuccess("");
 
-    const formData = new FormData(event.currentTarget);
-    const author = {
-      firstName: formData.get("firstname"),
-      lastName: formData.get("lastname"),
-    };
+        const formData = new FormData(event.currentTarget);
+        const author = {
+        firstName: formData.get("firstname"),
+        lastName: formData.get("lastname"),
+        };
 
-    try {
-        const response = await fetch("http://localhost:8080/api/v1/author/insertAuthor", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify(author),
-        });
-
-        if (response.ok) {
-            setSuccess("Author created ✅");
-            // small delay so user can see the message before reload
-            setTimeout(() => {
-            window.location.reload();
-            }, 1000);
-        } else {
-            const errorText = await response.text();
-            setError(errorText || "Error creating author ❌");
+        try{
+            const response = await fetch("http://localhost:8080/api/v1/author/insertAuthor", {
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(author)
+            });
+            if(response.ok){
+                setSuccess("✅ Author created");
+                //Timeout so the user has time to see the ok message
+                setTimeout(() => {
+                    //reload the page so the author's list is updated
+                    window.location.reload();
+                }, 1500);
+            }
+            else{
+                const errorText = await response.text();
+                if(errorText.length > 0){
+                    setError("❌ Error creating author: " + errorText);
+                }
+                else{
+                    setError("❌ Error creating author");
+                }
+            }
+        }catch(error){
+            setError("❌ Error creating author: " + error);
         }
-    } catch (err) {
-      setError("Network error, could not reach server ❌");
-    }
-  };
+    };
     return(
 
         <div className="modalBackground modal-backdrop position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center">

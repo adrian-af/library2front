@@ -1,6 +1,24 @@
 #navbar{
     background-color: #8C6D1F!important;
 }
-a{
-    color: #C4D7E0 !important;
- }
+
+.botonesHeader{
+    background-color: #C4D7E0 !important;
+    border: none !important;
+    color: black !important;
+    line-height: 1.5; 
+    text-align: center;
+    vertical-align: middle; 
+    border-radius: 0.375rem; 
+    transition: color 0.15s ease-in-out, 
+              background-color 0.15s ease-in-out, 
+              border-color 0.15s ease-in-out, 
+              box-shadow 0.15s ease-in-out;
+    height: 3em;
+}
+.btn-group .dropdown-item.dropdownItem {
+    color: black;
+}
+.dropdownItem:hover{
+    color: #333333;
+}

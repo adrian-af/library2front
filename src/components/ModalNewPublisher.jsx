@@ -1,47 +1,47 @@
 import React, {useState} from "react";
 import "../styles/ModalStyles.css";
 
-export default function ModalNewGenre({ closeModalNewGenre }) {
+export default function ModalNewPublisher({ closeModalNewPublisher }) {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     
-    const createGenre = async (event) => {
+    const createPublisher = async (event) => {
         event.preventDefault();
         setError("");
         setSuccess("");
     
         const formData = new FormData(event.currentTarget);
-        const genre = {
+        const publisher = {
             name: formData.get("name")
         };
     
         try{
-            const response = await fetch("http://localhost:8080/api/v1/genre/insertGenre", {
+            const response = await fetch("http://localhost:8080/api/v1/publisher/insertPublisher", {
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(genre)
+                body: JSON.stringify(publisher)
             });
             if(response.ok){
-                setSuccess("✅ Genre created");
+                setSuccess("✅ Publisher created");
                 //Timeout so the user has time to see the ok message
                 setTimeout(() => {
-                    //reload the page so the genre's list is updated
+                    //reload the page so the publishers' list is updated
                     window.location.reload();
                 }, 1500);
             }
             else{
                 const errorText = await response.text();
                 if(errorText.length > 0){
-                    setError("❌ Error creating genre: " + errorText);
+                    setError("❌ Error creating publisher: " + errorText);
                 }
                 else{
-                    setError("❌ Error creating genre");
+                    setError("❌ Error creating publisher");
                 }
             }
         }catch(error){
-            setError("❌ Error creating genre: " + error);
+            setError("❌ Error creating publisher: " + error);
         }
     };
     return(
@@ -50,19 +50,19 @@ export default function ModalNewGenre({ closeModalNewGenre }) {
             <div className="modalContainer bg-white p-3 rounded shadow-lg">
                 <div className="d-flex justify-content-between mb-3">
                     <div></div>
-                    <h2>Add a new genre</h2>
-                    <button type="button" className="btn btn-danger d-flex justify-content-center align-items-center" id="exit" onClick={closeModalNewGenre}>x</button>
+                    <h2>Add a new publisher</h2>
+                    <button type="button" className="btn btn-danger d-flex justify-content-center align-items-center" id="exit" onClick={closeModalNewPublisher}>x</button>
                 </div>
                 
                 <div>
-                    <form onSubmit={createGenre}>
+                    <form onSubmit={createPublisher}>
                         <div className="d-flex align-items-center gap-2">
                             <label htmlFor="name">Name</label>
                             <input className="textField form-control" id="name" name='name' type="text" minLength={1} required></input>
                         </div>                        
                         {error && <div className="text-danger mt-2">{error}</div>}
                         {success && <div className="text-success mt-2">{success}</div>}
-                        <button className="btn btn-primary m-4" type="submit">Add genre</button>
+                        <button className="btn btn-primary m-4" type="submit">Add publisher</button>
                     </form>
                 </div>
                 <div className="footer"></div>

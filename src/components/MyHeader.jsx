@@ -1,12 +1,14 @@
 // MyHeader.js
-import '../styles/MyHeader.css';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/MyHeader.css';
 import { Link } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { DropdownButton } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
 export const MyHeader = () => {
+  const navigate = useNavigate();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-primary fixed-top m-0 p-0" id="navbar">
       <div className="container-fluid">
@@ -17,19 +19,18 @@ export const MyHeader = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item mx-3">
-              <Link to="/">Home</Link>
+              <button className="botonesHeader btn" onClick={() => navigate("/")}>Home</button>
             </li>
-            <li className="nav-item mx-3">
+            <li className="nav-item mx-3 ">
               <Dropdown>
-                <DropdownButton key="add" title="Add">
-                  <Dropdown.Item as={Link} to="/addBook">Add Book</Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/addCopy">Add Copy</Dropdown.Item>
+                <DropdownButton key="add" title="Add" bsPrefix="botonesHeader">
+                  <Dropdown.Item as={Link} to="/addBook" className='dropdownItem'>Add Book</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/addCopy" className='dropdownItem'>Add Copy</Dropdown.Item>
                 </DropdownButton>
               </Dropdown>
-              
             </li>
             <li className="nav-item mx-3">
-              <Link to="/manage">Manage</Link>
+              <button className="botonesHeader btn" onClick={() => navigate("/manage")}>Manage</button>
             </li>
           </ul>
         </div>

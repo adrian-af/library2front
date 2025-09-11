@@ -61,3 +61,8 @@
   padding: 0;
   background-color: #C4D7E0;
 }
+
+.needed{
+  color: darkred;
+  font-weight: bolder;
+}

@@ -23,7 +23,7 @@ export const Add = () => {
         }
     };
 return(
-    <div>
+    <div className='position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center'>
         <h1>Add</h1>
         <select value={selectedValue} onChange={handleSelectChange}>
             <option value="Book">Book</option>
