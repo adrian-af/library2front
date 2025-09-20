@@ -1,5 +1,5 @@
 #navbar{
-    background-color: #8C6D1F!important;
+    background-color: #6E4B3A !important;
 }
 
 .botonesHeader{
@@ -21,4 +21,8 @@
 }
 .dropdownItem:hover{
     color: #333333;
+}
+
+#navbar > *{
+    font-family: 'Bree Serif', serif;
 }

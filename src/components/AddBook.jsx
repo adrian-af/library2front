@@ -3,7 +3,6 @@ import '../styles/App.css';
 import ReactDOM from "react-dom";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import { Spinner } from 'react-bootstrap';
 import Select from "react-select";
 import React, { useEffect, useState } from 'react';
 import ModalNewAuthor from './ModalNewAuthor';
@@ -11,6 +10,8 @@ import ModalNewGenre from './ModalNewGenre';
 import ModalNewPublisher from './ModalNewPublisher';
 
 export const AddBook = () =>   {
+    const URLBack = "http://localhost:8080/api";
+    const [title, setTitle] = useState("");
     const [authorData, setAuthorData] = useState([]);
     const [authorPopup, setAuthorPopup] = useState(false);
     const [selectedAuthor, setSelectedAuthor] = useState(null);
@@ -24,7 +25,7 @@ export const AddBook = () =>   {
     const [publisherPopup, setPublisherPopup] = useState(false);
   
     useEffect(() => {
-        fetch('http://localhost:8080/api/v1/author/allOrdered')
+        fetch(URLBack + '/v1/author/allOrdered')
         .then(response =>  {
             if(!response.ok){
                 throw new Error("Network response was not ok");
@@ -34,7 +35,7 @@ export const AddBook = () =>   {
         .then(jsonData => setAuthorData(jsonData))
         .catch(error => console.error('Error fetching data:', error));
 
-        fetch('http://localhost:8080/api/v1/genre/allOrdered')
+        fetch(URLBack + '/v1/genre/allOrdered')
         .then(response =>  {
             if(!response.ok){
                 throw new Error("Network response was not ok");
@@ -44,7 +45,7 @@ export const AddBook = () =>   {
         .then(jsonData => setGenreData(jsonData))
         .catch(error => console.error('Error fetching data:', error));
 
-        fetch('http://localhost:8080/api/v1/book/getLanguages')
+        fetch(URLBack + '/v1/book/getLanguages')
         .then(response =>  {
             if(!response.ok){
                 throw new Error("Network response was not ok");
@@ -54,7 +55,7 @@ export const AddBook = () =>   {
         .then(jsonData => setLanguagesData(jsonData))
         .catch(error => console.error('Error fetching data:', error));
 
-        fetch('http://localhost:8080/api/v1/publisher/allOrdered')
+        fetch(URLBack + '/v1/publisher/allOrdered')
         .then(response =>  {
             if(!response.ok){
                 throw new Error("Network response was not ok");
@@ -72,7 +73,7 @@ export const AddBook = () =>   {
 
     const genresSelect = genreData.map((oneGenre) =>({
         value: oneGenre.idGenre,
-        label: oneGenre.name
+        label: oneGenre.name.charAt(0).toUpperCase() + oneGenre.name.slice(1)
     }));
 
     const languagesSelect = languagesData.map((oneLanguage) => ({
@@ -86,11 +87,50 @@ export const AddBook = () =>   {
     }));
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (selectedAuthor) {
-      console.log("Selected author ID:", selectedAuthor.value);
-      console.log("Selected author name:", selectedAuthor.label);
+    if (selectedAuthor && selectedGenre && selectedLanguage && title) {
+        const formData = new FormData(e.target);
+        const fiction = formData.get("fiction");
+        const pages = formData.get("pages");
+        const year = formData.get("year");
+        const image = formData.get("image");
+        const isbn = formData.get("isbn");
+        
+        console.log("Title: " + title);
+        console.log("Author: " + JSON.stringify(selectedAuthor));
+        console.log("Genre: " + JSON.stringify(selectedGenre));
+        console.log("Fiction: " + fiction);
+        console.log("Pages: " + pages);
+        console.log("Year: " + year);
+        console.log("Image: " + image);
+        console.log("Language: " + JSON.stringify(selectedLanguage));
+        console.log("Publisher: " + JSON.stringify(selectedPublisher));
+        console.log("ISBN: " + isbn);
+
+        var newBook = {};
+        newBook.title = title;
+        newBook.author = [{ idAuthor : selectedAuthor.value }];
+        newBook.genre = { idGenre : selectedGenre.value };
+        newBook.fiction = fiction;
+        newBook.publisher = { idPublisher : selectedPublisher.value };
+        newBook.pages = pages;
+        newBook.year = year;
+        newBook.isbn = isbn;
+        newBook.language = selectedLanguage.value.toUpperCase();
+        newBook.coverImage = image;
+
+        fetch(URLBack + "/v1/book/insertBook", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newBook)
+        })
+            .then((response) => response.json())
+            .then((data) => console.log("book created: " + data))
+            .catch((err) => console.error(err));
+
+        
+
     } else {
-      console.log("No author selected");
+      console.log("No all fields are filled in");
     }
     console.log("languages: " + languagesData);
   };
@@ -98,16 +138,16 @@ export const AddBook = () =>   {
         <div className='position-fixed start-0 w-100 d-flex justify-content-center align-items-center page-container'>
             <div id="pageContent" className='modalContainer bg-white rounded shadow-lg d-flex flex-column'>
                 <h1>Add a book</h1>
-                <div>
+                <div id="addForm">
                     <form onSubmit={handleSubmit} id="forms">
                         <div className="d-flex align-items-center gap-2 mb-2">
-                            <label htmlFor="title">Title<span class="needed">*</span></label>
-                            <input id="title" name='title' type="text" className='form-control flex-grow-1'></input>
+                            <label htmlFor="title">Title<span className="needed">*</span></label>
+                            <input id="title" name='title' type="text" className='form-control flex-grow-1' value={title}  onChange={(e) => setTitle(e.target.value)}/>
                         </div>
                         <hr/>
                         <div className='mb-2 text-end'>
                             <div className="d-flex align-items-center mb-1">
-                                <label htmlFor="author">Author<span class="needed">*</span></label>
+                                <label htmlFor="author">Author<span className="needed">*</span></label>
                                 <Select options={authorsSelect} isSearchable value={selectedAuthor} onChange={setSelectedAuthor} placeholder="Select author..." className="react-select form-control flex-grow-1"/>
                             </div>
                             <button type='button' className='btn btn-secondary form-control button-new' onClick={() => setAuthorPopup(true)}>+ New author</button>
@@ -121,7 +161,7 @@ export const AddBook = () =>   {
                         <hr/>
                         <div className='mb-2 text-end'>
                             <div className="d-flex align-items-center mb-1">
-                                <label htmlFor="genre">Genre<span class="needed">*</span></label>
+                                <label htmlFor="genre">Genre<span className="needed">*</span></label>
                                 <Select options={genresSelect} isSearchable value={selectedGenre} onChange={setSelectedGenre} placeholder="Select genre..." className="react-select form-control flex-grow-1"/>
                             </div>
                             <button type='button' className='btn btn-secondary form-control button-new' onClick={() => setGenrePopup(true)}>+ New genre</button>
@@ -165,7 +205,7 @@ export const AddBook = () =>   {
                         <hr/>
                         <div className='mb-2 text-end'>
                             <div className="d-flex align-items-center mb-1">
-                                <label htmlFor="language">Language<span class="needed">*</span></label>
+                                <label htmlFor="language">Language<span className="needed">*</span></label>
                                 <Select options={languagesSelect} isSearchable value={selectedLanguage} onChange={setSelectedLanguage} placeholder="Select language..." className="react-select form-control flex-grow-1"/>
                             </div>
                         </div>

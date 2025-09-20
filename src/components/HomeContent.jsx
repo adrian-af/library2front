@@ -27,7 +27,6 @@ export const HomeContent = () => {
                 
             </form>
         </div>
-        <hr/>
         <ViewList/>
     </div>
   );
